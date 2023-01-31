@@ -1,0 +1,38 @@
+.title {
+    position: relative;
+    text-align: center;
+    margin-top: 10%;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+}
+
+.login-button {
+    display: inline-block !important;
+    margin: 5px;
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+}
+
+nav {
+    height: 50px;
+    padding-bottom: 50px;
+}
+
+.logo {
+    margin-left: 50px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+
+
