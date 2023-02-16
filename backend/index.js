@@ -1,11 +1,36 @@
 import express from "express"
 import cors from "cors"
+import oracledb from "oracledb"
 
 const app=express();
 app.use(cors());
 
-app.get("/getData", (req, res)=> {
+/*app.get("/getData", (req, res)=> {
     res.send("Hello world!")
+});*/
+
+app.get("/getOracleData", (req, res)=> {
+    async function fetchStudentInfo() {
+        try {
+            const connection = await oracledb.getConnection({
+                user: 'audreyweigel',
+                password: '5QC8eJJ3zDBMv72DudP1rVzV',
+                connectString: 'oracle.cise.ufl.edu'
+            });
+            const result = await connection.execute(
+                `SELECT * FROM Student`
+            );
+            return result;
+        }
+        catch (err) {
+            return err;
+        } 
+    }
+    fetchStudentInfo().then((result) => {
+        res.send(result);
+    }).catch((err) => {
+        res.send(err);
+    });
 });
 
 app.listen(5001, ()=>console.log("app is running"));
