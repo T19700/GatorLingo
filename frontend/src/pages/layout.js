@@ -6,7 +6,7 @@ const Layout = () => {
    const [data, setData]=useState();
 
   const getData=async()=>{
-    const response=await Axios.get("http://localhost:5001/getData");
+    const response=await Axios.get("http://localhost:5001/getOracleData");
     setData(response.data);
   }
 
@@ -15,8 +15,7 @@ const Layout = () => {
   }, []);
   return (
     <>
-      {/* Displayed data from backend just for testing purpsoes
-      <div>{data}</div> */}
+      <div>{data}</div>
       <Outlet />
     </>
   )

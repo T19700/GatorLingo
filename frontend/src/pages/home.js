@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import Button from '@mui/material/Button';
 import Header from '../components/header';
+import Axios from "axios";
 import { Link } from "react-router-dom";
 import '../App.css'; 
 
 
 const Home = () => {
+    const [data, setData]=useState();
+
+    const getData=async()=>{
+        const response=await Axios.get("http://localhost:5001/getOracleData");
+        setData(response.data);
+    }
+
+    useEffect(()=>{
+        getData()
+    }, []);
+
     return <div class="home">
+        <div>Hi {data}</div>
+
         {/* Header */}
         <Header /> 
 
