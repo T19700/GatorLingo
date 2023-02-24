@@ -2,6 +2,7 @@
     position: relative;
     text-align: center;
     margin-top: 10%;
+    font-weight: normal;
 }
 
 .login-container {
@@ -9,9 +10,26 @@
     justify-content: center;
 }
 
+
+
+.div-header {
+    position: relative;
+}
+
+.login-button-header {
+    position: absolute;
+    right: 120px;
+    top: 25px;
+    font-size: 32px;
+}
+
 .login-button {
     display: inline-block !important;
     margin: 5px;
+}
+
+:visited {
+    color: white;
 }
 
 a:-webkit-any-link {
@@ -24,6 +42,7 @@ nav {
 }
 
 .logo {
+    display: inline-block;
     margin-left: 50px;
     margin-top: 20px;
     margin-bottom: 10px;

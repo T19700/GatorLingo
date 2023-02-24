@@ -19,7 +19,7 @@ const Home = () => {
     }, []);
 
     return <div class="home">
-        <div>Hi {data}</div>
+        <div>{data}</div>
 
         {/* Header */}
         <Header /> 
@@ -28,20 +28,6 @@ const Home = () => {
         <h1 class="title">
             Welcome to GatorLingo
         </h1>
-
-        {/* Login Buttons */}
-        <div className="login-container">
-            <div class="login-button">
-                <Button variant="contained">
-                    <Link to="/student-login" class="link">Student Login</Link>
-                </Button>
-            </div>
-            <div className="login-button">
-                <Button variant="contained">
-                    <Link to="/professor-login" class="link">Professor Login</Link>
-                </Button>
-            </div>
-        </div>
 
         <div className="login-container">
             <div class="login-button">
