@@ -5,12 +5,10 @@
     font-weight: normal;
 }
 
-.login-container {
+.button-container {
     display: flex;
     justify-content: center;
 }
-
-
 
 .div-header {
     position: relative;
@@ -18,18 +16,23 @@
 
 .login-button-header {
     position: absolute;
-    right: 120px;
-    top: 25px;
+    right: 60px;
+    top: 0px;
     font-size: 32px;
+    color:#46505A;
 }
 
-.login-button {
+.login-link:visited {
+    color: #46505A;
+}
+
+.link:visited {
+    color: rgb(6, 6, 6);
+}
+
+.button {
     display: inline-block !important;
     margin: 5px;
-}
-
-:visited {
-    color: white;
 }
 
 a:-webkit-any-link {

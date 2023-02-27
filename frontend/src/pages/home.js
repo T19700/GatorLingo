@@ -29,13 +29,13 @@ const Home = () => {
             Welcome to GatorLingo
         </h1>
 
-        <div className="login-container">
-            <div class="login-button">
+        <div className="button-container">
+            <div class="button">
                 <Button variant="contained">
-                    <Link to="/classes" class="link">Testing: List of Classes</Link>
+                    <Link to="/class-selection" class="link">Testing: Select Classes</Link>
                 </Button>
             </div>
-            <div className="login-button">
+            <div className="button">
                 <Button variant="contained">
                     <Link to="/lesson" class="link">Testing: Lesson Page</Link>
                 </Button>
