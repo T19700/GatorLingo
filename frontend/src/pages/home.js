@@ -5,12 +5,11 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import '../App.css'; 
 
-
 const Home = () => {
     const [data, setData]=useState();
 
     const getData=async()=>{
-        const response=await Axios.get("http://localhost:5001/getOracleData");
+        const response=await Axios.get("http://localhost:1521/getOracleData");
         setData(response.data);
     }
 
