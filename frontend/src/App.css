@@ -51,6 +51,11 @@ nav {
     margin-bottom: 10px;
 }
 
+.class_logo {
+    margin: 10px;
+    max-height: 190px;
+}
+
 .progress-bar {
     margin-left: 10%;
     margin-right: 10%;
