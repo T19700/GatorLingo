@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../components/header';
-import '../App.css'; 
+import Header from '../../components/header';
+import '../../App.css'; 
 import LinearProgress from '@mui/material/LinearProgress';
 
 function Lesson() {

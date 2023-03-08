@@ -1,13 +1,13 @@
-import '../App.css'; 
+import '../../App.css'; 
 import * as React from 'react';
-import Header from '../components/header';
+import Header from '../../components/header';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { Stack, Box } from '@mui/material';
 import Container from '@mui/material/Container';
-import Spanish1_Icon from '../components/Spanish1.png'
-import Spanish2_Icon from '../components/Spanish2.png'
+import Spanish1_Icon from '../../components/Spanish1.png'
+import Spanish2_Icon from '../../components/Spanish2.png'
 
 
 function ClassSelection() {

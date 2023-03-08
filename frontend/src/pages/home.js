@@ -31,12 +31,7 @@ const Home = () => {
         <div className="button-container">
             <div class="button">
                 <Button variant="contained">
-                    <Link to="/class-selection" class="link">Testing: Select Classes</Link>
-                </Button>
-            </div>
-            <div className="button">
-                <Button variant="contained">
-                    <Link to="/lesson" class="link">Testing: Lesson Page</Link>
+                    <Link to="/student-home" class="link">Testing: Student Home Page</Link>
                 </Button>
             </div>
             <div className="button">

@@ -5,7 +5,7 @@ import '../../App.css';
 import { Link } from "react-router-dom";
 import LinearProgress from '@mui/material/LinearProgress';
 
-function ProfHome() {
+function StudentHome() {
     return (
         <div>
             <Header />
@@ -13,17 +13,12 @@ function ProfHome() {
                 <LinearProgress variant="determinate" value={50} />     
             </div>
             
-            <h1 className="title">Professor Home Page</h1>
+            <h1 className="title">Student Home Page</h1>
 
             <div className="button-container">
                 <div className="button">
                     <Button variant="contained">
-                        <Link to="/create-class" class="link">Testing: Create Class Page</Link>
-                    </Button>
-                </div>
-                <div className="button">
-                    <Button variant="contained">
-                        <Link to="/courses" class="link">Testing: Course Selection Page</Link>
+                        <Link to="/class-selection" class="link">Testing: Class Selection Page</Link>
                     </Button>
                 </div>
             </div>
@@ -33,4 +28,4 @@ function ProfHome() {
     );
 }
 
-export default ProfHome;
+export default StudentHome;
