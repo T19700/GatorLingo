@@ -39,6 +39,11 @@ const Home = () => {
                     <Link to="/lesson" class="link">Testing: Lesson Page</Link>
                 </Button>
             </div>
+            <div className="button">
+                <Button variant="contained">
+                    <Link to="/prof-home" class="link">Testing: Professor Home Page</Link>
+                </Button>
+            </div>
         </div>
         
     </div>

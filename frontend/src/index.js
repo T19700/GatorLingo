@@ -9,6 +9,8 @@ import Classes from './pages/classes';
 import Login from './pages/login';
 import SignUp from './pages/sign-up';
 import ClassSelection from './pages/class-selection';
+import CreateClass from './pages/professor-pages/create-class';
+import ProfHome from './pages/professor-pages/prof-home';
 
 export default function App() {
   return (
@@ -21,6 +23,8 @@ export default function App() {
           <Route path="login" element={<Login />} />
           <Route path="sign-up" element={<SignUp />} />
           <Route path="class-selection" element={<ClassSelection />} />
+          <Route path="create-class" element={<CreateClass />} />
+          <Route path="prof-home" element={<ProfHome />} />
         </Route>
       </Routes>
     </BrowserRouter>
