@@ -35,6 +35,7 @@ function SignUp() {
     return (
         <div class="login-form">
             <Header />
+            <br/>
             <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
             <CssBaseline />
