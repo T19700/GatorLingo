@@ -105,6 +105,16 @@ function StudentHome() {
                     <Container>
                         <Typography textAlign={'center'} variant='h3'>Class Activities</Typography>
                     </Container>
+                    <Container>
+                        <Box
+                            sx={{
+                                height: 400,
+                                width: 1,
+                            }}
+                        >
+                            <iframe src="https://ufl.qualtrics.com/jfe/form/SV_4GRWrdQZ988kBVQ" height="100%" width="100%" alignProperty="center"></iframe>
+                        </Box>
+                    </Container>
                 </Grid>
                 <Grid xs={4}>
                     <Container>
