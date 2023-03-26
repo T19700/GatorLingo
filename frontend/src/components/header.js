@@ -2,7 +2,6 @@ import React from 'react'
 import '../App.css';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import {ReactComponent as Logo} from './logo.svg';
 import Divider from '@mui/material/Divider';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -13,6 +12,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import IconButton from '@mui/material/IconButton';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import GatorLingoLogo from './Logo1.png'
+
 
 const theme = createTheme({
     palette: {
@@ -29,7 +30,7 @@ function LoginHeader() {
     }
     else {
         return (
-            <Button variant="text" style={{maxWidth: '100px', maxHeight: '75.5px', minWidth: '100px', minHeight: '75.5px'}} sx={{ fontSize: 16}}>
+            <Button variant="text" style={{maxWidth: '100px', maxHeight: '110px', minWidth: '100px', minHeight: '110px'}} sx={{ fontSize: 16}}>
                 <Link to="/login" class="login-link">Login</Link>
             </Button>
         )
@@ -56,7 +57,7 @@ const MenuHeader = () => {
 
     return (
         <React.Fragment>
-        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', marginTop: '10px' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', marginTop: '25px' }}>
             <IconButton
                 onClick={handleClick}
                 size="small"
@@ -126,7 +127,7 @@ const Header = () => {
             <div classname='div-header'>
                 <div className="logo">
                         <Link to="/" class="a">
-                            <Logo/> 
+                            <img class="class_logo" src={GatorLingoLogo} width="200" height="80" alt="gator for spanish 1"/>
                         </Link>
                 </div>
                 {/* Will have to add logic to check if user is logged in, otherwise, show login button */}
