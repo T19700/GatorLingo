@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import "../App.css"
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Stack, Box } from '@mui/material';
 
 export default function MCQuestion() {
-  return (
+   return (
         <Box m="auto" sx={{ border: 1, borderRadius: 5,  width: 700, height: 300, borderColor: '#e0e0e0'}}>
             <Stack
                 direction="column"
@@ -18,6 +18,7 @@ export default function MCQuestion() {
                 </Typography>
 
                 <Typography component="h1" variant="h4" color="#2074d4">
+                    {/* Phrase to translate */}
                     lo pasé bien
                 </Typography>
 
@@ -33,14 +34,14 @@ export default function MCQuestion() {
                             fontSize: "18px",
                             color: 'black'
                         }}
+                        onclick="displayCorrect()"
                         onClick={() => {
-                            // show if correct answer
                         }}>
                         <Stack direction="column" spacing={2}>
                             <div>I had a good time. </div>
                         </Stack>
                     </Button>
-                    <Button
+                    <Button onclick="displayCorrectFooter()"
                         style={{
                             border: 5,
                             borderRadius: 25,
@@ -50,7 +51,6 @@ export default function MCQuestion() {
                             color: 'black'
                         }}
                         onClick={() => {
-                             // show if correct answer
                         }}>
                         <Stack direction="column" spacing={2}>
                             <div>I had a bad time.</div>
@@ -76,5 +76,4 @@ export default function MCQuestion() {
             </Stack>
         </Box>
   );
-
 }

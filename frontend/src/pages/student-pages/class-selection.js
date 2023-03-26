@@ -44,7 +44,7 @@ function ClassSelection() {
                                 // course page should automatically open to the course page that the student is "enrolled" in
                             }}>
                             <Stack direction="column" spacing={2}>
-                                <Link to="/classes" class="link">
+                                <Link to="/student-home" class="link">
                                     <img class="class_logo" src={Spanish1_Icon} alt="gator for spanish 1"/>
                                     <div>Spanish 1</div>
                                 </Link>
