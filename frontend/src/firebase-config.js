@@ -10,15 +10,6 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_APP_MEASUREMENT_ID,
 };
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDO6HyFEcLwpYYcI-1d-uCTvRMst8p-J1I",
-//   authDomain: "gatorlingo.firebaseapp.com",
-//   projectId: "gatorlingo",
-//   storageBucket: "gatorlingo.appspot.com",
-//   messagingSenderId: "232175060402",
-//   appId: "1:232175060402:web:ac2d2b9a036c2bc5cbd0ab",
-//   measurementId: "G-5SHBSN7TXM",
-// };
 
 const app = initializeApp(firebaseConfig);
 
