@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, {} from 'react'
 import Button from '@mui/material/Button';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Header from '../components/header';
-import Axios from "axios";
 import { Link } from "react-router-dom";
 import '../App.css'; 
 
 
 const Home = () => {
-    const [data, setData]=useState();
-
-    const getData=async()=>{
-        const response=await Axios.get("http://localhost:1521/getOracleData");
-        setData(response.data);
-    }
-
-    useEffect(()=>{
-        getData()
-    }, []);
-
     const theme = createTheme({
         palette: {
           primary: {
@@ -28,8 +16,6 @@ const Home = () => {
       });
 
     return <div class="home">
-        <div>{data}</div>
-
         {/* Header */}
         <Header /> 
         <div class="main-container">
@@ -53,20 +39,6 @@ const Home = () => {
                 </Link>
             </div>
         </div>
-
-        {/* <Box m="auto" sx={{ border: 1, borderRadius: 5,  width: 1400, height: 400, borderColor: '#e0e0e0'}}>
-            <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing={2}>
-                 <img src={CenturyTowerImage} width="500px" height="300px" alt="century tower"/>
-
-                <Typography component="h1" variant="h5">
-                    Welcome to GatorLingo
-                </Typography>
-            </Stack>
-        </Box> */}
 
         {/* Title */}
         <h1 class="title">
