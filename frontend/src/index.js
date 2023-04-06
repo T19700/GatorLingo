@@ -8,6 +8,7 @@ import Lesson from "./pages/student-pages/lesson";
 import Classes from "./pages/student-pages/classes";
 import Login from "./pages/login";
 import SignUp from "./pages/sign-up";
+import Logout from "./pages/logout";
 import ClassSelection from "./pages/student-pages/class-selection";
 import StudentHome from "./pages/student-pages/student-home";
 import CreateClass from "./pages/professor-pages/create-class";
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="classes" element={<Classes />} />
           <Route path="login" element={<Login />} />
           <Route path="sign-up" element={<SignUp />} />
+          <Route path="logout" element={<Logout />} />
           <Route path="class-selection" element={<ClassSelection />} />
           <Route path="create-class" element={<CreateClass />} />
           <Route path="prof-home" element={<ProfHome />} />

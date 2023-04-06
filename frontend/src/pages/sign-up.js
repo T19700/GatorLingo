@@ -13,7 +13,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase-config";
 const theme = createTheme();
 
@@ -21,6 +21,7 @@ function SignUp() {
   const [registerEmail, setRegisterEmail] = React.useState("");
   const [registerPassword, setRegisterPassword] = React.useState("");
   const [group, setGroup] = React.useState("");
+  const [userName, setUserName] = React.useState("");
 
   const register = async () => {
     try {
@@ -30,6 +31,10 @@ function SignUp() {
         registerPassword
       );
       console.log(user);
+
+      updateProfile(auth.currentUser, {
+        displayName: userName,
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -75,6 +80,9 @@ function SignUp() {
               sx={{ mt: 1 }}
             >
               <TextField
+                onChange={(event) => {
+                  setUserName(event.target.value);
+                }}
                 margin="normal"
                 required
                 fullWidth

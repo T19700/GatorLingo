@@ -13,6 +13,9 @@ import IconButton from "@mui/material/IconButton";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import GatorLingoLogo from "./Logo1.png";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebase-config";
+import { useState, useEffect } from "react";
 
 const theme = createTheme({
   palette: {
@@ -23,8 +26,11 @@ const theme = createTheme({
 });
 
 function LoginHeader() {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   // Check if logged in logic here
-  if (false) {
+  if (user) {
     return <MenuHeader />;
   } else {
     return (
@@ -55,8 +61,9 @@ const MenuHeader = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const completeLogout = () => {
+  const completeLogout = async () => {
     // Logout logic here
+    await signOut(auth);
   };
   const handleLogout = () => {
     handleClose();
