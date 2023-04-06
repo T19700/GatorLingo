@@ -7,10 +7,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebase-config";
 import { Link } from 'react-router-dom';
 
 
 export default function Spanish1Dashboard() {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
     return (
         <Box m="auto" sx={{ border: 1, borderRadius: 5,  width: 1300, height: 600, borderColor: '#e0e0e0'}}>
             <Stack
@@ -20,7 +25,7 @@ export default function Spanish1Dashboard() {
                 spacing={2}>
                 <br/>
                 <Typography component="h1" variant="h5">
-                    Welcome to Your Spanish 1 Dashboard
+                    Welcome to Your Spanish 1 Dashboard {user.displayName}
                 </Typography>
 
                 <Stack
