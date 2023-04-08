@@ -188,6 +188,7 @@ function Lesson() {
     }
 
     const getData= async() => {
+        // set entire question with question, answer, and two random answers
         const response=await Axios.get("http://localhost:1521/getQuestions", {
             params: {
                 type: "vocab",
@@ -195,15 +196,13 @@ function Lesson() {
                 i: index, 
             }
         }) 
-        setQuestion(response.data);
-        const correct=await Axios.get("http://localhost:1521/getCorrectAnswer", {
-            params: {
-                type: "vocab",
-                lesson: 1,
-                i: index
-            }
-        });
-        setCorrectAnswer(correct.data);
+        var str = response.data;
+        const myArray = str.split(" ");
+        setQuestion(myArray[0]);
+        setCorrectAnswer(myArray[1])
+        setRandom1(myArray[2]);
+        setRandom2(myArray[3]);
+
         const number=await Axios.get("http://localhost:1521/getNumberOfQuestions", {
             params: {
                 type: "vocab",
@@ -211,20 +210,6 @@ function Lesson() {
             }
         });
         setNumQuestions(number.data);
-        const rand1=await Axios.get("http://localhost:1521/getRandomAnswer", {
-            params: {
-                type: "vocab",
-                lesson: 1,
-            }
-        });
-        setRandom1(rand1.data);
-        const rand2=await Axios.get("http://localhost:1521/getRandomAnswer", {
-            params: {
-                type: "vocab",
-                lesson: 1,
-            }
-        });
-        setRandom2(rand2.data);
     }
 
     return (
