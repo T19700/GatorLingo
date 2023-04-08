@@ -53,9 +53,15 @@ app.get("/getQuestions", (req, res)=> {
         const index = req.query.i;
         try {
             connection = await oracledb.getConnection(constr);
-            const sql = "SELECT QUESTION FROM QUESTION WHERE QUESTIONTYPE = '" + type + "' AND LESSONNUM = " + lessonNum + " OFFSET " + (index - 1) + " ROWS FETCH NEXT 1 ROWS ONLY";
-            const result = await connection.execute(sql);
-            res.send(result.rows);
+            const sqlQuestion = "SELECT QUESTION FROM QUESTION WHERE QUESTIONTYPE = '" + type + "' AND LESSONNUM = " + lessonNum + " OFFSET " + (index - 1) + " ROWS FETCH NEXT 1 ROWS ONLY";
+            const sqlAnswer = "SELECT ANSWER FROM QUESTION WHERE QUESTIONTYPE = '" + type + "' AND LESSONNUM = " + lessonNum + " OFFSET " + (index - 1) + " ROWS FETCH NEXT 1 ROWS ONLY";
+            const sqlRandom1 = "SELECT ANSWER FROM ( SELECT ANSWER FROM QUESTION WHERE QUESTIONTYPE='"+ type + "' AND LESSONNUM=" +lessonNum + " ORDER BY dbms_random.value ) WHERE rownum = 1";
+            const sqlRandom2 = "SELECT ANSWER FROM ( SELECT ANSWER FROM QUESTION WHERE QUESTIONTYPE='"+ type + "' AND LESSONNUM=" +lessonNum + " ORDER BY dbms_random.value ) WHERE rownum = 1";
+            const result = await connection.execute(sqlQuestion);
+            const result2 = await connection.execute(sqlAnswer);
+            const result3 = await connection.execute(sqlRandom1);
+            const result4 = await connection.execute(sqlRandom2);
+            res.send(result.rows + " " + result2.rows + " " + result3.rows + " " + result4.rows);
         }
         catch (err) {
             console.log(err);
@@ -73,34 +79,6 @@ app.get("/getQuestions", (req, res)=> {
     fetchQuestion();
 });
 
-app.get("/getCorrectAnswer", (req, res)=> {
-    async function fetchCorrect() {
-        let connection;
-        const type = req.query.type;
-        const lessonNum = req.query.lesson;
-        const index = req.query.i;
-        try {
-            connection = await oracledb.getConnection(constr);
-            const sql = "SELECT ANSWER FROM QUESTION WHERE QUESTIONTYPE = '" + type + "' AND LESSONNUM = " + lessonNum + " OFFSET " + (index - 1) + " ROWS FETCH NEXT 1 ROWS ONLY";
-            const result = await connection.execute(sql);
-            res.send(result.rows);
-            
-        }
-        catch (err) {
-            console.log(err);
-        } 
-        finally {
-            if (connection) {
-                try {
-                  await connection.close();
-                } catch (err) {
-                    console.log(err);
-                }
-              }
-        }
-    }
-    fetchCorrect();
-});
 
 app.get("/getNumberOfQuestions", (req, res)=> {
     async function fetchQuestionInfo() {
@@ -110,33 +88,6 @@ app.get("/getNumberOfQuestions", (req, res)=> {
         try {
             connection = await oracledb.getConnection(constr);
             const sql = "SELECT COUNT(*) FROM QUESTION WHERE QUESTIONTYPE='"+ type + "' AND LESSONNUM=2";
-            const result = await connection.execute(sql);
-            res.send(result.rows);
-        }
-        catch (err) {
-            console.log(err);
-        } 
-        finally {
-            if (connection) {
-                try {
-                  await connection.close();
-                } catch (err) {
-                    console.log(err);
-                }
-              }
-        }
-    }
-    fetchQuestionInfo();
-});
-
-app.get("/getRandomAnswer", (req, res)=> {
-    async function fetchQuestionInfo() {
-        let connection;
-        const type = req.query.type;
-        const lessonNum = req.query.lesson;
-        try {
-            connection = await oracledb.getConnection(constr);
-            const sql = "SELECT ANSWER FROM ( SELECT ANSWER FROM QUESTION WHERE QUESTIONTYPE='"+ type + "' AND LESSONNUM=" +lessonNum + " ORDER BY dbms_random.value ) WHERE rownum = 1";
             const result = await connection.execute(sql);
             res.send(result.rows);
         }

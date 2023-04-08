@@ -17,11 +17,13 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase-config";
 const theme = createTheme();
 
+
 function SignUp() {
   const [registerEmail, setRegisterEmail] = React.useState("");
   const [registerPassword, setRegisterPassword] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
   const [group, setGroup] = React.useState("");
-  const [userName, setUserName] = React.useState("");
 
   const register = async () => {
     try {
@@ -30,14 +32,16 @@ function SignUp() {
         registerEmail,
         registerPassword
       );
-      console.log(user);
-
-      updateProfile(auth.currentUser, {
-        displayName: userName,
+      const currentUser = user.user;
+      await updateProfile(currentUser, {
+        displayName: (firstName + " " + lastName),
+        occupation: group, 
       });
+      console.log("USER: " + user);
+      console.log("GROUP: " + group)
     } catch (error) {
       console.log(error.message);
-    }
+    }  
   };
 
   const handleChange = (event) => {
@@ -81,7 +85,7 @@ function SignUp() {
             >
               <TextField
                 onChange={(event) => {
-                  setUserName(event.target.value);
+                  setFirstName(event.target.value);
                 }}
                 margin="normal"
                 required
@@ -93,6 +97,9 @@ function SignUp() {
                 autoFocus
               />
               <TextField
+                onChange={(event) => {
+                  setLastName(event.target.value);
+                }}
                 margin="normal"
                 required
                 fullWidth
