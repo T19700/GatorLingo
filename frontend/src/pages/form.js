@@ -11,10 +11,12 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 function Form() {
+  let navigate = useNavigate();
   const [loginEmail, setLoginEmail] = React.useState("");
   const [loginPassword, setLoginPassword] = React.useState("");
 
@@ -35,6 +37,10 @@ function Form() {
         loginPassword
       );
       console.log(user);
+
+      navigate("/student-home");
+
+      //<Link to="/" class="a"></Link>;
     } catch (error) {
       console.log(error.message);
     }
@@ -91,15 +97,16 @@ function Form() {
                 id="password"
                 autoComplete="current-password"
               />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
+              <Link to="/class-selection" class="link">
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+              </Link>
 
               <Grid container>
                 <Grid item xs>
