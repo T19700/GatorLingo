@@ -7,9 +7,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import Media from './media'
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
 import { Link } from 'react-router-dom';
+import Polls from './polls';
 
 
 export default function Spanish1Dashboard() {
@@ -17,7 +19,7 @@ export default function Spanish1Dashboard() {
     const user = auth.currentUser;
 
     return (
-        <Box m="auto" sx={{ border: 1, borderRadius: 5,  width: 1300, height: 600, borderColor: '#e0e0e0'}}>
+        <Box m="auto" sx={{ border: 3, borderRadius: 5,  width: 1300, height: 600, borderColor: '#FA4616'}}>
             <Stack
                 direction="column"
                 justifyContent="center"
@@ -33,7 +35,7 @@ export default function Spanish1Dashboard() {
                     justifyContent="center"
                     alignItems="center"
                     spacing={2}>
-                    <Box m="auto" sx={{ border: 1, borderRadius: 5,  width: 400, height: 500, borderColor: '#e0e0e0'}}>
+                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 500, borderColor: '#FA4616'}}>
                         <Stack
                             direction="column"
                             justifyContent="center"
@@ -77,7 +79,7 @@ export default function Spanish1Dashboard() {
                                 </List>
                         </Stack>                 
                     </Box>
-                    <Box m="auto" sx={{ border: 1, borderRadius: 5,  width: 400, height: 500, borderColor: '#e0e0e0'}}>
+                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 500, borderColor: '#FA4616'}}>
                         <Stack
                                 direction="column"
                                 justifyContent="center"
@@ -124,11 +126,13 @@ export default function Spanish1Dashboard() {
                         justifyContent="center"
                         alignItems="center"
                         spacing={2}>
-                            <Box display="flex" m="auto" sx={{ border: 1, borderRadius: 5,  width: 400, height: 245, borderColor: '#e0e0e0', justifyContent: "center"}}>
-                                <Typography component="h1" variant="h6">Class Polls</Typography>
+                            <Box display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 245, borderColor: '#FA4616', justifyContent: "center"}}>
+                                {/* <Typography component="h1" variant="h6">Class Polls</Typography> */}
+                                <Polls />
                             </Box>
-                            <Box  display="flex" m="auto" sx={{ border: 1, borderRadius: 5,  width: 400, height: 245, borderColor: '#e0e0e0', justifyContent: "center"}}>
-                                <Typography component="h1" variant="h6">Media</Typography>
+                            <Box  display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 245, borderColor: '#FA4616', justifyContent: "center"}}>
+                                {/* <Typography component="h1" variant="h6">Media</Typography> */}
+                                <Media />
                             </Box>
                     </Stack>
                 </Stack>
