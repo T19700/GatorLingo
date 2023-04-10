@@ -161,7 +161,7 @@ nav {
   }
 
   .splitScreen {
-    height: 68vh;
+    height: 62.6vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
