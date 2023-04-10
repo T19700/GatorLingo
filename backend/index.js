@@ -17,7 +17,7 @@ Download instantclient_19_8
 Copy path into initOracleClient and replace it
 */
 
-oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'});            
+oracledb.initOracleClient({libDir: 'C:/oracle/instantclient-basic-windows.x64-19.18.0.0.0dbru/instantclient_19_18'});            
 
 app.get("/getOracleData", (req, res)=> {
     async function fetchStudentInfo() {

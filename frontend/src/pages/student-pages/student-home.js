@@ -4,6 +4,7 @@ import '../../App.css';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import Spanish1Dashboard from '../../components/spanish1_dash';
+import Media from '../../components/media';
 import { Card } from '@mui/material';
 
 
@@ -22,6 +23,7 @@ function StudentHome() {
     
                 {/* Check student's registered class and display correct class page here  */}
                 <Spanish1Dashboard />
+                
             </div>
     
             
