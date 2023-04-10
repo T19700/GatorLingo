@@ -13,9 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import GatorLingoLogo from "./Logo1.png";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../firebase-config";
-import { useState, useEffect } from "react";
+import { getAuth, signOut } from "firebase/auth";
 
 const theme = createTheme({
   palette: {
@@ -53,7 +51,20 @@ function LoginHeader() {
 }
 
 const MenuHeader = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  // create user initials
+  var str = user.displayName;
+  var matches = str.match(/\b(\w)/g); 
+  var initials = matches.join('');
+
+  // show occupation
+  var occ = user.occupation;
+  console.log("OCCUPATION: " + occ);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -62,12 +73,7 @@ const MenuHeader = () => {
     setAnchorEl(null);
   };
   const completeLogout = async () => {
-    // Logout logic here
     await signOut(auth);
-  };
-  const handleLogout = () => {
-    handleClose();
-    completeLogout();
   };
 
   return (
@@ -89,7 +95,7 @@ const MenuHeader = () => {
           aria-expanded={open ? "true" : undefined}
         >
           {/* Change user initials here */}
-          <Avatar sx={{ bgcolor: "#e0e0e0", width: 50, height: 50 }}>AA</Avatar>
+          <Avatar sx={{ bgcolor: "#e0e0e0", width: 50, height: 50 }}>{initials}</Avatar>
         </IconButton>
       </Box>
       <Menu
@@ -121,9 +127,11 @@ const MenuHeader = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
+        <Link to="/student-home" class="link">
+          <MenuItem onClick={handleClose}>
+            <Avatar /> My Dashboard
+          </MenuItem>
+        </Link>
         <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
@@ -158,7 +166,6 @@ const Header = () => {
               />
             </Link>
           </div>
-          {/* Will have to add logic to check if user is logged in, otherwise, show login button */}
           <div className="login-button-header">
             <LoginHeader />
           </div>
