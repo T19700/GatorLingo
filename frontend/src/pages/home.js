@@ -39,7 +39,7 @@ const Home = () => {
             </ThemeProvider>
           </Link>
 
-          <Link to="/" class="link">
+          <Link to="/about-us" class="link">
             <ThemeProvider theme={theme}>
               <Button
                 color="primary"
@@ -51,26 +51,6 @@ const Home = () => {
               </Button>
             </ThemeProvider>
           </Link>
-        </div>
-      </div>
-
-      {/* Title */}
-      <h1 class="title">Welcome to GatorLingo</h1>
-
-      <div className="button-container">
-        <div class="button">
-          <Button variant="contained">
-            <Link to="/student-home" class="link">
-              Testing: Student Home Page
-            </Link>
-          </Button>
-        </div>
-        <div className="button">
-          <Button variant="contained">
-            <Link to="/prof-home" class="link">
-              Testing: Professor Home Page
-            </Link>
-          </Button>
         </div>
       </div>
     </div>

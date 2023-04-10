@@ -1,7 +1,7 @@
 import React from "react";
 import "../App.css";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -28,7 +28,7 @@ function LoginHeader() {
   const user = auth.currentUser;
 
   // Check if logged in logic here
-  if (user) {
+  if (user != null) {
     return <MenuHeader />;
   } else {
     return (
@@ -51,13 +51,14 @@ function LoginHeader() {
 }
 
 const MenuHeader = () => {
+  let navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
 
   // create user initials
   var str = user.displayName;
-  var matches = str.match(/\b(\w)/g); 
-  var initials = matches.join('');
+  var matches = str.match(/\b(\w)/g);
+  var initials = matches.join("");
 
   // show occupation
   var occ = user.occupation;
@@ -74,6 +75,7 @@ const MenuHeader = () => {
   };
   const completeLogout = async () => {
     await signOut(auth);
+    navigate("/");
   };
 
   return (
@@ -95,7 +97,9 @@ const MenuHeader = () => {
           aria-expanded={open ? "true" : undefined}
         >
           {/* Change user initials here */}
-          <Avatar sx={{ bgcolor: "#e0e0e0", width: 50, height: 50 }}>{initials}</Avatar>
+          <Avatar sx={{ bgcolor: "#e0e0e0", width: 50, height: 50 }}>
+            {initials}
+          </Avatar>
         </IconButton>
       </Box>
       <Menu
