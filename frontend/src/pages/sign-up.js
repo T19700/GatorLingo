@@ -12,11 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase-config";
 const theme = createTheme();
-
 
 function SignUp() {
   const [registerEmail, setRegisterEmail] = React.useState("");
@@ -24,6 +23,7 @@ function SignUp() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [group, setGroup] = React.useState("");
+  let navigate = useNavigate();
 
   const register = async () => {
     try {
@@ -34,14 +34,16 @@ function SignUp() {
       );
       const currentUser = user.user;
       await updateProfile(currentUser, {
-        displayName: (firstName + " " + lastName),
-        occupation: group, 
+        displayName: firstName + " " + lastName,
+        occupation: group,
       });
       console.log("USER: " + user);
-      console.log("GROUP: " + group)
+      console.log("GROUP: " + group);
+
+      navigate("/student-home");
     } catch (error) {
       console.log(error.message);
-    }  
+    }
   };
 
   const handleChange = (event) => {
