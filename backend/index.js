@@ -5,31 +5,106 @@ import oracledb from "oracledb"
 const app=express();
 app.use(cors());
 
+const constr = {
+    user: "audreyweigel",
+    password: "5QC8eJJ3zDBMv72DudP1rVzV",
+    connectString: "oracle.cise.ufl.edu/orcl"
+}
 
-/*app.get("/getData", (req, res)=> {
-    res.send("Hello world!")
-});*/
+/* 
+Instructions for Oracle Library:
+Download instantclient_19_8
+Copy path into initOracleClient and replace it
+*/
+
+oracledb.initOracleClient({libDir: 'C:/oracle/instantclient-basic-windows.x64-19.18.0.0.0dbru/instantclient_19_18'});            
 
 app.get("/getOracleData", (req, res)=> {
-    res.send("step 1")
     async function fetchStudentInfo() {
+        let connection;
+        const type = req.query.type;
         try {
-            const connection = await oracledb.getConnection({
-                user: 'audreyweigel',
-                password: '5QC8eJJ3zDBMv72DudP1rVzV',
-                connectString: 'oracle.cise.ufl.edu/orcl'
-            });
-            res.send("step 2")
-            const result = await connection.execute(
-                'SELECT * FROM Student'
-            );
-            res.send(result);
+            connection = await oracledb.getConnection(constr);
+            const sql = "SELECT * FROM QUESTION";
+            const result = await connection.execute(sql);
+            res.send(result.rows);
         }
         catch (err) {
-            return err;
+            console.log(err);
         } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
     }
     fetchStudentInfo();
 });
 
-app.listen(5001, ()=> console.log("app is running"));
+app.get("/getQuestions", (req, res)=> {
+    async function fetchQuestion() {
+        let connection;
+        const type = req.query.type;
+        const lessonNum = req.query.lesson;
+        const index = req.query.i;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sqlQuestion = "SELECT QUESTION FROM QUESTION WHERE QUESTIONTYPE = '" + type + "' AND LESSONNUM = " + lessonNum + " OFFSET " + (index - 1) + " ROWS FETCH NEXT 1 ROWS ONLY";
+            const sqlAnswer = "SELECT ANSWER FROM QUESTION WHERE QUESTIONTYPE = '" + type + "' AND LESSONNUM = " + lessonNum + " OFFSET " + (index - 1) + " ROWS FETCH NEXT 1 ROWS ONLY";
+            const sqlRandom1 = "SELECT ANSWER FROM ( SELECT ANSWER FROM QUESTION WHERE QUESTIONTYPE='"+ type + "' AND LESSONNUM=" +lessonNum + " ORDER BY dbms_random.value ) WHERE rownum = 1";
+            const sqlRandom2 = "SELECT ANSWER FROM ( SELECT ANSWER FROM QUESTION WHERE QUESTIONTYPE='"+ type + "' AND LESSONNUM=" +lessonNum + " ORDER BY dbms_random.value ) WHERE rownum = 1";
+            const result = await connection.execute(sqlQuestion);
+            const result2 = await connection.execute(sqlAnswer);
+            const result3 = await connection.execute(sqlRandom1);
+            const result4 = await connection.execute(sqlRandom2);
+            res.send(result.rows + " " + result2.rows + " " + result3.rows + " " + result4.rows);
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    fetchQuestion();
+});
+
+
+app.get("/getNumberOfQuestions", (req, res)=> {
+    async function fetchQuestionInfo() {
+        let connection;
+        const type = req.query.type;
+        const lessonNum = req.query.lesson;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql = "SELECT COUNT(*) FROM QUESTION WHERE QUESTIONTYPE='"+ type + "' AND LESSONNUM=2";
+            const result = await connection.execute(sql);
+            res.send(result.rows);
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    fetchQuestionInfo();
+});
+
+app.listen(1521, ()=> console.log("app is running"));

@@ -1,63 +1,60 @@
-import React, { useEffect, useState } from 'react'
-import Button from '@mui/material/Button';
-import Header from '../components/header';
-import Axios from "axios";
+import React from "react";
+import Button from "@mui/material/Button";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Header from "../components/header";
 import { Link } from "react-router-dom";
-import '../App.css'; 
-
+import "../App.css";
 
 const Home = () => {
-    const [data, setData]=useState();
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#FFFFFF",
+      },
+    },
+  });
 
-    const getData=async()=>{
-        const response=await Axios.get("http://localhost:5001/getOracleData");
-        setData(response.data);
-    }
+  return (
+    <div class="home">
+      {/* Header */}
+      <Header />
+      <div class="main-container">
+        <h1> Welcome to GatorLingo </h1>
+        <p>
+          {" "}
+          Your favorite study guide for your language courses at University of
+          Florida.{" "}
+        </p>
+        <div className="main-btns">
+          <Link to="/login" class="link">
+            <ThemeProvider theme={theme}>
+              <Button
+                color="primary"
+                variant="outlined"
+                size="large"
+                sx={{ m: 2 }}
+              >
+                GET STARTED
+              </Button>
+            </ThemeProvider>
+          </Link>
 
-    useEffect(()=>{
-        getData()
-    }, []);
-
-    return <div class="home">
-        <div>Hi {data}</div>
-
-        {/* Header */}
-        <Header /> 
-
-        {/* Title */}
-        <h1 class="title">
-            Welcome to GatorLingo
-        </h1>
-
-        {/* Login Buttons */}
-        <div className="login-container">
-            <div class="login-button">
-                <Button variant="contained">
-                    <Link to="/student-login" class="link">Student Login</Link>
-                </Button>
-            </div>
-            <div className="login-button">
-                <Button variant="contained">
-                    <Link to="/professor-login" class="link">Professor Login</Link>
-                </Button>
-            </div>
+          <Link to="/about-us" class="link">
+            <ThemeProvider theme={theme}>
+              <Button
+                color="primary"
+                variant="contained"
+                size="large"
+                fontSize="60"
+              >
+                ABOUT US
+              </Button>
+            </ThemeProvider>
+          </Link>
         </div>
-
-        <div className="login-container">
-            <div class="login-button">
-                <Button variant="contained">
-                    <Link to="/classes" class="link">Testing: List of Classes</Link>
-                </Button>
-            </div>
-            <div className="login-button">
-                <Button variant="contained">
-                    <Link to="/lesson" class="link">Testing: Lesson Page</Link>
-                </Button>
-            </div>
-        </div>
-        
+      </div>
     </div>
-  };
-  
-  export default Home;
+  );
+};
 
+export default Home;
