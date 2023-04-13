@@ -30,6 +30,14 @@
     color: rgb(0, 0, 0);
 }
 
+.link::before {
+  color: rgb(0, 0, 0);
+}
+
+.link:hover {
+  color: rgb(0, 0, 0);
+}
+
 .button {
     display: inline-block !important;
     margin: 5px;
@@ -97,9 +105,16 @@ nav {
 
   .footer-declaration {
     position: fixed;
-    left: 400px;
+    left: 375px;
     bottom: 65px;
   }
+
+  .footer-declaration-with-text {
+    position: fixed;
+    left: 400px;
+    bottom: 55px;
+  }
+
 
   .footer-next-button {
     position: fixed;

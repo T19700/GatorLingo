@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Stack, Box } from '@mui/material';
 import { useLocation } from 'react-router-dom'
-
+import TextField from "@mui/material/TextField";
 
 const theme = createTheme({
     footer: {
@@ -23,15 +23,14 @@ const theme = createTheme({
       }
 });
 
-function Lesson() {
+function TranslationLesson() {
     const [question, setQuestion]=useState();
     const [correctAnswer, setCorrectAnswer]=useState();
     const [index, setIndex] = useState(1);
     const [displayCorrect, setDisplay] = useState(false);
     const [displayIncorrect, setIncor] = useState(false);
     const [numQuestions, setNumQuestions] = useState();
-    const [random1, setRandom1] = useState();
-    const [random2, setRandom2] = useState();
+    const [userAnswer, setUserAnswer] = useState("");
     const progress = ((index/numQuestions) * 100);
 
     const location = useLocation()
@@ -40,7 +39,6 @@ function Lesson() {
     
     useEffect(()=>{
         getData()
-        MultipleChoiceQuestion();
     }, [index]);
 
     const handleClick = () => {
@@ -55,6 +53,21 @@ function Lesson() {
     function displayIncorrectFooter() {
         setIncor(true);
     }
+
+    function checkAnswer() {
+        var areEqual = userAnswer.toUpperCase() === correctAnswer.toUpperCase();
+        if (areEqual) {
+            displayCorrectFooter();
+        }
+        else {
+            displayIncorrectFooter();
+        }
+    }
+
+    const handleInputChange = (event) => {
+        setUserAnswer(event.target.value);
+        console.log("user input: " + userAnswer);
+      }
 
     const CorrectQuestion = () => {
         const [value, setValue] = React.useState(0);
@@ -100,8 +113,9 @@ function Lesson() {
                     sx={{bgcolor: '#f74825'}}
                 >
                 <Stack direction="row" spacing={7} >
-                    <div class="footer-declaration">
+                    <div class="footer-declaration-with-text">
                         <Typography component="h1" variant="h5" color='white' fontSize={28}> Incorrect. </Typography>
+                        <Typography component="h1" variant="h5" color='white' fontSize={20}> The correct answer was "{correctAnswer}" </Typography>
                     </div>
                     <div class="footer-next-button">
                         <Button onClick={handleClick} variant="text" style={{bgcolor: 'white', maxWidth: '200px', maxHeight: '60px', minWidth: '200px', minHeight: '60px'}} 
@@ -116,86 +130,9 @@ function Lesson() {
         )
     }
 
-    function MultipleChoiceQuestion() {
-        return( 
-            <div>
-                <Box m="auto" sx={{ border: 1, borderRadius: 5,  width: 700, height: 300, borderColor: '#e0e0e0'}}>
-                <Stack
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={2}>
-                    <br></br>
-                    <Typography component="h1" variant="h5">
-                        Choose the correct English translation.
-                    </Typography>
-
-                    <Typography component="h1" variant="h4" color="#2074d4">
-                        {/* Phrase to translate */}
-                        {question}
-                    </Typography>
-
-                    <br/><br/>
-
-                    <Stack direction="row" spacing={7} >
-                        {/* First answer option */}
-                        <Button
-                            style={{
-                                border: 5,
-                                borderRadius: 25,
-                                backgroundcolor: "#e0e0e0",
-                                textTransform: 'none',
-                                fontSize: "18px",
-                                color: 'black'
-                            }}
-                            onClick={displayCorrectFooter}
-                            >
-                            <Stack direction="column" spacing={2}>
-                                <div>{correctAnswer}</div>
-                            </Stack>
-                        </Button>
-                        {/* Second answer option */}
-                        <Button
-                            style={{
-                                border: 5,
-                                borderRadius: 25,
-                                backgroundcolor: "#e0e0e0",
-                                textTransform: 'none',
-                                fontSize: "18px",
-                                color: 'black'
-                            }}
-                            onClick={displayIncorrectFooter}
-                            >
-                            <Stack direction="column" spacing={2}>
-                                <div>{random1}</div>
-                            </Stack>
-                        </Button>
-                        {/* Third answer option */}
-                        <Button
-                            style={{
-                                border: 5,
-                                borderRadius: 25,
-                                backgroundcolor: "#e0e0e0",
-                                textTransform: 'none',
-                                fontSize: "18px",
-                                color: 'black'
-                            }}
-                            onClick={displayIncorrectFooter}
-                            >
-                            <Stack direction="column" spacing={2}>
-                                <div>{random2}</div>
-                            </Stack>
-                        </Button>
-                    </Stack>
-                </Stack>
-            </Box> 
-        </div>
-        )
-    }
-
     const getData= async() => {
         // set entire question with question, answer, and two random answers
-        const response=await Axios.get("http://localhost:1521/getQuestions", {
+        const response=await Axios.get("http://localhost:1521/getTranslationQuestions", {
             params: {
                 type: lessonType,
                 lesson: lessonNum,
@@ -203,11 +140,9 @@ function Lesson() {
             }
         }) 
         var str = response.data;
-        const myArray = str.split(" ");
+        const myArray = str.split("+");
         setQuestion(myArray[0]);
         setCorrectAnswer(myArray[1])
-        setRandom1(myArray[2]);
-        setRandom2(myArray[3]);
 
         const number=await Axios.get("http://localhost:1521/getNumberOfQuestions", {
             params: {
@@ -226,7 +161,54 @@ function Lesson() {
             </div>
             <br />
 
-        <MultipleChoiceQuestion/>
+            <div>
+                <Box m="auto" sx={{ border: 1, borderRadius: 5,  width: 700, height: 300, borderColor: '#e0e0e0'}}>
+                <Stack
+                    direction="column"
+                    justifyContent="center"
+                    alignItems="center"
+                    spacing={2}>
+                    <br></br>
+                    <Typography component="h1" variant="h5">
+                        Type in the correct English translation.
+                    </Typography>
+
+                    <Typography component="h1" variant="h4" color="#2074d4">
+                        {/* Phrase to translate */}
+                        {question}
+                    </Typography>
+
+                    <br/><br/>
+
+                    <Stack direction="row" spacing={7} >
+                        <Box
+                            sx={{
+                                width: 400,
+                                maxWidth: '100%',
+                            }}
+                            >
+                            <TextField
+                                onChange={handleInputChange}
+                                margin="normal"
+                                value={userAnswer}
+                                fullWidth
+                                id="userAnswer"
+                                label="Enter translation"
+                                name="userAnswer"
+                                multiline
+                                autoFocus
+                                dir="ltr"
+                            />
+                        </Box>
+                        <Button onClick={() => { checkAnswer() }} variant="outlined" style={{marginTop: 14, bgcolor: 'white', maxWidth: '100px', maxHeight: '50px', minWidth: '100px', minHeight: '60px'}} 
+                            sx={{ fontSize: 16}}>
+                            Check Answer
+                        </Button>
+                    
+                    </Stack>
+                </Stack>
+            </Box> 
+        </div>
             
 
         {displayCorrect ? 
@@ -244,4 +226,4 @@ function Lesson() {
     );
 }
 
-export default Lesson;
+export default TranslationLesson;
