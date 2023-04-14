@@ -47,7 +47,7 @@ export default function Spanish1Dashboard() {
         for (let i = 1; i <= numTranslationLessons; i++) { numTransl[i-1] = i; }
 
         return (
-            <Box m="auto" sx={{borderRadius: 5,  width: 1300, height: 600}}>
+            <Box m="auto" sx={{borderRadius: 5,  width: 1600, height: 600}}>
             <Stack
                 direction="column"
                 justifyContent="center"
@@ -62,7 +62,7 @@ export default function Spanish1Dashboard() {
                     justifyContent="center"
                     alignItems="center"
                     spacing={2}>
-                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 500, borderColor: '#FA4616'}}>
+                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 500, height: 610, borderColor: '#FA4616'}}>
                         <Stack
                             direction="column"
                             justifyContent="center"
@@ -70,7 +70,7 @@ export default function Spanish1Dashboard() {
                             spacing={2}>
                                 <Typography component="h1" variant="h6" sx={{ p: 2, marginBottom: -4 }}>Translation Quizzes</Typography>
                                  <List
-                                    sx={{ width: '100%', maxWidth: 400, minWidth: 400, bgcolor: 'background.paper' }}
+                                    sx={{ width: '100%', maxWidth: 500, minWidth: 500, bgcolor: 'background.paper' }}
                                     component="nav"
                                     direction="column"
                                     alignItems="center"
@@ -88,7 +88,7 @@ export default function Spanish1Dashboard() {
                                 </List>
                         </Stack>                 
                     </Box>
-                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 500, borderColor: '#FA4616'}}>
+                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 500, height: 610, borderColor: '#FA4616'}}>
                         <Stack
                                 direction="column"
                                 justifyContent="center"
@@ -96,7 +96,7 @@ export default function Spanish1Dashboard() {
                                 spacing={2}>
                                     <Typography component="h1" variant="h6" sx={{ p: 2, marginBottom: -4 }}>Vocabulary Lessons</Typography>
                                     <List
-                                        sx={{ width: '100%', maxWidth: 400, minWidth: 400, bgcolor: 'background.paper' }}
+                                        sx={{ width: '100%', maxWidth: 500, minWidth: 500, bgcolor: 'background.paper' }}
                                         component="nav"
                                         direction="column"
                                         alignItems="center"
@@ -119,13 +119,17 @@ export default function Spanish1Dashboard() {
                         justifyContent="center"
                         alignItems="center"
                         spacing={2}>
-                            <Box display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 245, borderColor: '#FA4616', justifyContent: "center"}}>
-                                {/* <Typography component="h1" variant="h6">Class Polls</Typography> */}
-                                <Polls />
+                            <Box display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 500, height: 300, borderColor: '#FA4616', justifyContent: "center"}}>
+                                <Stack>
+                                    <Typography component="h1" variant="h6" align='center'>Class Polls</Typography>
+                                    <Polls />
+                                </Stack>
                             </Box>
-                            <Box  display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 245, borderColor: '#FA4616', justifyContent: "center"}}>
-                                {/* <Typography component="h1" variant="h6">Media</Typography> */}
-                                <Media />
+                            <Box  display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 500, height: 300, borderColor: '#FA4616', justifyContent: "center"}}>
+                                <Stack>
+                                    <Typography component="h1" variant="h6" align='center'>Recommended Class Videos</Typography>
+                                    <Media />
+                                </Stack>
                             </Box>
                     </Stack>
                 </Stack>
