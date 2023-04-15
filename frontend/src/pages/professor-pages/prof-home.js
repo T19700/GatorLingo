@@ -1,32 +1,49 @@
 import React from 'react'
-import Button from '@mui/material/Button';
 import Header from '../../components/header';
-import '../../App.css'; 
-import { Link } from "react-router-dom";
+import '../../App.css';
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../../firebase-config";
+import ProfessorDashboard from '../../components/prof-dash';
+import Media from '../../components/media';
+import { Card } from '@mui/material';
 
 function ProfHome() {
-    return (
-        <div>
-            <Header />
-            
-            <h1 className="title">Professor Home Page</h1>
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-            <div className="button-container">
-                <div className="button">
-                    <Button variant="contained">
-                        <Link to="/create-class" class="link">Testing: Create Class Page</Link>
-                    </Button>
-                </div>
-                <div className="button">
-                    <Button variant="contained">
-                        <Link to="/courses" class="link">Testing: Course Selection Page</Link>
-                    </Button>
-                </div>
+    if (user) {
+        console.log(user.displayName)
+        return (
+            <div>
+                <Header />
+                <br/>
+    
+                {/* Check student's registered class and display correct class page here  */}
+                <ProfessorDashboard />
+                
             </div>
-        </div>
+    
+            
+        );
+    }
+    else {
+        return (
+            <div>
+                <Header />
+            </div>
+        );
+    }
+    // return (
+    //     <div>
+    //         <Header />
+    //         <br/>
+
+    //         {/* Check student's registered class and display correct class page here  */}
+    //         <Spanish1Dashboard />
+    //     </div>
 
         
-    );
+    // );
 }
 
 export default ProfHome;
