@@ -14,7 +14,8 @@ import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../firebase-config";
+import { auth, db } from "../firebase-config";
+import { collection, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
 const theme = createTheme();
 
 function SignUp() {
@@ -23,7 +24,10 @@ function SignUp() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [group, setGroup] = React.useState("");
+  const [users, setUsers] = React.useState([]);
   let navigate = useNavigate();
+
+  const usersCollectionRef = collection(db, "users");
 
   const register = async () => {
     try {
@@ -35,19 +39,20 @@ function SignUp() {
       const currentUser = user.user;
       await updateProfile(currentUser, {
         displayName: firstName + " " + lastName,
-        occupation: group,
       });
       console.log("USER: " + user);
       console.log("GROUP: " + group);
 
-      navigate("/student-home");
+      await setDoc(doc(db, "users", registerEmail), {
+        Name: firstName + " " + lastName,
+        Occupation: group,
+        Course: "Not assigned",
+      });
+
+      navigate("/class-selection");
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  const handleChange = (event) => {
-    setGroup(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -146,7 +151,9 @@ function SignUp() {
                   id="group-select"
                   value={group}
                   label="Student or Professor?"
-                  onChange={handleChange}
+                  onChange={(event) => {
+                    setGroup(event.target.value);
+                  }}
                 >
                   <MenuItem value={"student"}>Student</MenuItem>
                   <MenuItem value={"professor"}>Professor</MenuItem>
