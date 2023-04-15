@@ -15,6 +15,8 @@ import CreateClass from "./pages/professor-pages/create-class";
 import ProfHome from "./pages/professor-pages/prof-home";
 import Courses from "./pages/professor-pages/courses";
 import CourseStats from "./pages/professor-pages/course-stats";
+import AboutUs from "./pages/about-us";
+import TranslationLesson from "./pages/student-pages/translationLesson";
 
 export default function App() {
   return (
@@ -33,6 +35,8 @@ export default function App() {
           <Route path="student-home" element={<StudentHome />} />
           <Route path="courses" element={<Courses />} />
           <Route path="course-stats" element={<CourseStats />} />
+          <Route path="about-us" element={<AboutUs />} />
+          <Route path="translationLesson" element={<TranslationLesson />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -30,6 +30,14 @@
     color: rgb(0, 0, 0);
 }
 
+.link::before {
+  color: rgb(0, 0, 0);
+}
+
+.link:hover {
+  color: rgb(0, 0, 0);
+}
+
 .button {
     display: inline-block !important;
     margin: 5px;
@@ -97,9 +105,16 @@ nav {
 
   .footer-declaration {
     position: fixed;
-    left: 400px;
+    left: 375px;
     bottom: 65px;
   }
+
+  .footer-declaration-with-text {
+    position: fixed;
+    left: 400px;
+    bottom: 55px;
+  }
+
 
   .footer-next-button {
     position: fixed;
@@ -129,6 +144,14 @@ nav {
     margin-top: -100px;
   }
 
+  .about-us-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    object-fit: contain;
+    margin-top: -9px;
+  }
+
   .main-container > p {
     margin-top: 8px;
     color: #fff;
@@ -150,4 +173,32 @@ nav {
 
   .btn {
     width: 100%;
+  }
+
+  .splitScreen {
+    height: 62.6vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .topPane {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+      'Lucida Sans', Arial, sans-serif;
+  }
+
+  .bottomPane {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+      'Lucida Sans', Arial, sans-serif;
+  }
+
+  .about-us-image {
+    max-width: 720px;
+    margin: 0;
   }

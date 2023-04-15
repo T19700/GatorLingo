@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react'
 import "../App.css"
 import Typography from '@mui/material/Typography';
 import { Stack, Box } from '@mui/material';
@@ -8,18 +8,46 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import Media from './media'
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../firebase-config";
+import { getAuth } from "firebase/auth";
 import { Link } from 'react-router-dom';
 import Polls from './polls';
+import Axios from "axios";
+
+
 
 
 export default function Spanish1Dashboard() {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    return (
-        <Box m="auto" sx={{ border: 3, borderRadius: 5,  width: 1300, height: 600, borderColor: '#FA4616'}}>
+    const [numVocabLessons, setNumVocabLessons] = useState();
+    const [numTranslationLessons, setNumTranslationLessons] = useState();
+    const numVocab = [], numTransl = [];
+
+    useEffect(()=>{
+        getData();
+        Dashboard();
+    }, [numVocab, numTransl]);
+
+    const getData= async() => {
+        // set entire question with question, answer, and two random answers
+        const response = await Axios.get("http://localhost:1521/numberOfLessons", {
+            params: {
+                className: 'SPN1130'
+            }
+        })
+        var str = response.data;
+        const myArray = str.split(" ");
+        setNumVocabLessons(myArray[0]);
+        setNumTranslationLessons(myArray[1]);
+    }
+
+    function Dashboard() {
+        for (let i = 1; i <= numVocabLessons; i++) { numVocab[i-1] = i; }
+        for (let i = 1; i <= numTranslationLessons; i++) { numTransl[i-1] = i; }
+
+        return (
+            <Box m="auto" sx={{borderRadius: 5,  width: 1600, height: 600}}>
             <Stack
                 direction="column"
                 justifyContent="center"
@@ -27,97 +55,62 @@ export default function Spanish1Dashboard() {
                 spacing={2}>
                 <br/>
                 <Typography component="h1" variant="h5">
-                    Welcome to Your Spanish 1 Dashboard {user.displayName}
+                    Welcome to Your Spanish 1 Dashboard, {user.displayName}
                 </Typography>
-
                 <Stack
                     direction="row"
                     justifyContent="center"
                     alignItems="center"
                     spacing={2}>
-                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 500, borderColor: '#FA4616'}}>
+                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 500, height: 610, borderColor: '#FA4616'}}>
                         <Stack
                             direction="column"
                             justifyContent="center"
                             alignItems="center"
                             spacing={2}>
-                                <Typography component="h1" variant="h6" sx={{ p: 2 }}>Translation Quizzes</Typography>
-                                 {/* Won't be href="mc-question" but href="lessons" or something */}
+                                <Typography component="h1" variant="h6" sx={{ p: 2, marginBottom: -4 }}>Translation Quizzes</Typography>
                                  <List
-                                    sx={{ width: '100%', maxWidth: 400, minWidth: 400, bgcolor: 'background.paper' }}
+                                    sx={{ width: '100%', maxWidth: 500, minWidth: 500, bgcolor: 'background.paper' }}
                                     component="nav"
                                     direction="column"
                                     alignItems="center"
                                     aria-labelledby="nested-list-subheader">
-                                        <Divider />
-                                         <ListItem alignItems="flex-start">
+                                         {(numTransl).map((i) => (   
+                                            <ListItem alignItems="flex-start">
                                             <ListItemButton component="" href="#lesson">
-                                                <Link to="/lesson" class="link">
-                                                    <ListItemText primary="Lesson 1 *Testing Here*" />
+                                            <Link class="link" to="/translationLesson" state={{ number: i, type: "translation" }}>
+                                                    <ListItemText primary={`Lesson ${i}`} />
                                                 </Link>
-                                            </ListItemButton>     
-                                        </ListItem>
-                                        <Divider />
-                                        <ListItem alignItems="flex-start">
-                                            <ListItemButton component="" href="">
-                                                <ListItemText primary="Lesson 2" />
-                                            </ListItemButton>
-                                        </ListItem>
-                                        <Divider />
-                                        <ListItem alignItems="flex-start">
-                                            <ListItemButton component="" href="#mc-question">
-                                                <ListItemText primary="Lesson 3" />
-                                            </ListItemButton>
-                                        </ListItem>
-                                        <Divider />
-                                        <ListItem alignItems="flex-start">
-                                            <ListItemButton component="" href="#mc-question">
-                                                <ListItemText primary="Lesson 4" />
-                                            </ListItemButton>
-                                        </ListItem>
-                                        <Divider />       
+                                            </ListItemButton>  
+                                            <Divider />   
+                                            </ListItem>
+                                        ))}     
                                 </List>
                         </Stack>                 
                     </Box>
-                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 500, borderColor: '#FA4616'}}>
+                    <Box m="auto" sx={{ border: 2, borderRadius: 5,  width: 500, height: 610, borderColor: '#FA4616'}}>
                         <Stack
                                 direction="column"
                                 justifyContent="center"
                                 alignItems="center"
                                 spacing={2}>
-                                    <Typography component="h1" variant="h6" sx={{ p: 2 }}>Vocabulary Lessons</Typography>
-                                    {/* Won't be href="mc-question" but href="lessons" or something */}
+                                    <Typography component="h1" variant="h6" sx={{ p: 2, marginBottom: -4 }}>Vocabulary Lessons</Typography>
                                     <List
-                                        sx={{ width: '100%', maxWidth: 400, minWidth: 400, bgcolor: 'background.paper' }}
+                                        sx={{ width: '100%', maxWidth: 500, minWidth: 500, bgcolor: 'background.paper' }}
                                         component="nav"
                                         direction="column"
                                         alignItems="center"
                                         aria-labelledby="nested-list-subheader">
-                                            <Divider />
+                                            {numVocab.map((i) => (   
                                             <ListItem alignItems="flex-start">
-                                                <ListItemButton component="" href="#mc-question">
-                                                    <ListItemText primary="Lesson 1" />
-                                                </ListItemButton>
+                                            <ListItemButton component="" href="#lesson">
+                                            <Link class="link" to="/lesson" state={{ number: i, type: "vocab" }}>
+                                                <ListItemText primary={`Lesson ${i}`} />
+                                                </Link>
+                                            </ListItemButton>  
+                                            <Divider />   
                                             </ListItem>
-                                            <Divider />
-                                            <ListItem alignItems="flex-start">
-                                                <ListItemButton component="" href="#mc-question">
-                                                    <ListItemText primary="Lesson 2" />
-                                                </ListItemButton>
-                                            </ListItem>
-                                            <Divider />
-                                            <ListItem alignItems="flex-start">
-                                                <ListItemButton component="" href="#mc-question">
-                                                    <ListItemText primary="Lesson 3" />
-                                                </ListItemButton>
-                                            </ListItem>
-                                            <Divider />
-                                            <ListItem alignItems="flex-start">
-                                                <ListItemButton component="" href="#mc-question">
-                                                    <ListItemText primary="Lesson 4" />
-                                                </ListItemButton>
-                                            </ListItem>
-                                            <Divider />       
+                                        ))}       
                                     </List>
                             </Stack>
                     </Box>
@@ -126,20 +119,28 @@ export default function Spanish1Dashboard() {
                         justifyContent="center"
                         alignItems="center"
                         spacing={2}>
-                            <Box display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 245, borderColor: '#FA4616', justifyContent: "center"}}>
-                                {/* <Typography component="h1" variant="h6">Class Polls</Typography> */}
-                                <Polls />
+                            <Box display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 500, height: 300, borderColor: '#FA4616', justifyContent: "center"}}>
+                                <Stack>
+                                    <Typography component="h1" variant="h6" align='center'>Class Polls</Typography>
+                                    <Polls />
+                                </Stack>
                             </Box>
-                            <Box  display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 400, height: 245, borderColor: '#FA4616', justifyContent: "center"}}>
-                                {/* <Typography component="h1" variant="h6">Media</Typography> */}
-                                <Media />
+                            <Box  display="flex" m="auto" sx={{ border: 2, borderRadius: 5,  width: 500, height: 300, borderColor: '#FA4616', justifyContent: "center"}}>
+                                <Stack>
+                                    <Typography component="h1" variant="h6" align='center'>Recommended Class Videos</Typography>
+                                    <Media />
+                                </Stack>
                             </Box>
                     </Stack>
                 </Stack>
-                
-
-
             </Stack>
         </Box>
-    );
+        );
+    }
+
+    return (
+        <div>
+            <Dashboard />
+        </div>
+    )
 }
