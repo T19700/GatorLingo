@@ -17,7 +17,34 @@ Download instantclient_19_8
 Copy path into initOracleClient and replace it
 */
 oracledb.initOracleClient({libDir: 'C:/oracle/instantclient-basic-windows.x64-19.18.0.0.0dbru/instantclient_19_18'});            
-//oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'});            
+//oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'});      
+
+app.get("/getResourceData", (req, res)=> {
+    async function fetchResource() {
+        let connection;
+        const type = req.query.type;
+        const classID = req.query.classID;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql = "SELECT LINK FROM Resources WHERE TYPE = '" + type + "' AND CLASSID = '" + classID + "'";
+            const result = await connection.execute(sql);
+            res.send(result.rows);
+        }
+        catch (err) {
+            console.log(err);
+        }
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    fetchResource();
+});
 
 app.get("/getOracleData", (req, res)=> {
     async function fetchStudentInfo() {

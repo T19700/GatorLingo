@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react";
 import { CardContent, CardHeader, makeStyles } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import Card from "@mui/material/Card";
+import Axios from "axios";
 
 function Polls() {
     const [polls, setpolls] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pollsPerPage, setPollsPerPage] = useState(1);
+    const resourceType = "Poll"
+    const resourceClassID = "SPN1130"
 
     useEffect(() => {
-        const videoUrls = [];
-        videoUrls.push("https://ufl.qualtrics.com/jfe/form/SV_4GRWrdQZ988kBVQ");
-        videoUrls.push("https://ufl.qualtrics.com/jfe/form/SV_87wJyuwhJa6Z29o");
-        setpolls(videoUrls);
+        getData()
     }, [])
 
     const indexOfLastVideo = currentPage * pollsPerPage;
@@ -24,26 +24,29 @@ function Polls() {
     };
 
     const totalPages = Math.ceil(polls.length / pollsPerPage);
+
+    const getData= async() => {
+        // set entire question with question, answer, and two random answers
+        const response=await Axios.get("http://localhost:1521/getResourceData", {
+            params: {
+                type: resourceType,
+                classID: resourceClassID
+            }
+        }) 
+        var str = response.data;
+        const pollUrls = [];
+        for (let i = 0; i < str.length; i++) {
+            pollUrls.push(str[i][0]);
+        }
+        setpolls(pollUrls);
+    }
+
     return (
         <div>
             {currentVideos.map(pollUrl => (
-                // <Card key={videoUrl}>
-                //     <CardHeader title="t">
-                //         <CardContent>
-                //             <iframe
-                //                 width="100"
-                //                 height="100"
-                //                 // src={`https://www.youtube.com/embed/${videoUrl.split('=')[1]}`}
-                //                 src="https://www.youtube.com/embed/9rBgSgk4vmw"
-                //                 title={videoUrl}
-                //                 allowFullScreen
-                //             ></iframe>
-                //         </CardContent>
-                //     </CardHeader>
-                // </Card>
                 <iframe
                      width="100%"
-                     height="80%"
+                     height="55%"
                      //src={`https://www.youtube.com/embed/${pollUrl.split('=')[1]}`}
                      src={pollUrl}
                      // src="https://www.youtube.com/embed/9rBgSgk4vmw"
