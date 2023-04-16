@@ -15,9 +15,38 @@ const constr = {
 Instructions for Oracle Library:
 Download instantclient_19_8
 Copy path into initOracleClient and replace it
-*/
-oracledb.initOracleClient({libDir: 'C:/oracle/instantclient-basic-windows.x64-19.18.0.0.0dbru/instantclient_19_18'});            
-// oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'});            
+*/         
+
+//oracledb.initOracleClient({libDir: 'C:/oracle/instantclient-basic-windows.x64-19.18.0.0.0dbru/instantclient_19_18'});            
+//oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'}); 
+//oracledb.initOracleClient({libDir: 'C:/Users/trist/Oracle/instantclient_21_9'});    
+
+app.get("/getResourceData", (req, res)=> {
+    async function fetchResource() {
+        let connection;
+        const type = req.query.type;
+        const classID = req.query.classID;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql = "SELECT LINK FROM Resources WHERE TYPE = '" + type + "' AND CLASSID = '" + classID + "'";
+            const result = await connection.execute(sql);
+            res.send(result.rows);
+        }
+        catch (err) {
+            console.log(err);
+        }
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    fetchResource();
+});
 
 app.get("/getOracleData", (req, res)=> {
     async function fetchStudentInfo() {
@@ -169,6 +198,7 @@ app.get("/numberOfLessons", (req, res)=> {
     fetchQuestionInfo();
 });
 
+
 app.get("/setUser", (req)=> {
     async function setUserInfo() {
         let connection;
@@ -240,13 +270,12 @@ app.get("/getUserOccupation", (req, res)=> {
         let connection;
         const firstName = req.query._firstName;
         const lastName = req.query.lastName;
-
         try {
             connection = await oracledb.getConnection(constr);
             const sql = "SELCT OCCUPATION FROM ALL_USERS WHERE firstName = " + firstName + " AND lastName = " + lastName;
             const result = await connection.execute(sql);
-            res.send(result.rows);        }
-        catch (err) {
+            res.send(result.rows);        
+        } catch (err) {
             console.log(err);
         } 
         finally {
@@ -277,6 +306,64 @@ app.get("/getUserClass", (req, res)=> {
                 const trimmedClassName = className.substring(0, 7); 
                 res.send(trimmedClassName);
             }
+        } catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    getUserInfo();
+});
+
+app.get("/availableCourses", (req, res)=> {
+    async function fetchQuestionInfo() {
+        let connection;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql1 = "SELECT DISTINCT CLASSID FROM QUESTION";
+            const result1 = await connection.execute(sql1);
+            console.log(result1.rows);
+            res.send(result1.rows);
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    fetchQuestionInfo();
+});
+
+app.get("/addQuestion", (req, res)=> {
+    async function fetchQuestionInfo() {
+        let connection;
+        let lessonNum = req.query.lessonNum;
+        let className = req.query.className;
+        let questionType = req.query.questionType;
+        let question = req.query.question;
+        let answer = req.query.answer;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql1 = "INSERT INTO QUESTION VALUES( :num, :name, :type, :q, :a)";
+            //const sql1 = "INSERT INTO QUESTION VALUES(" + lessonNum + ", SPN1130, " + questionType + ", " + question + ", " + answer + ")";
+            const result = await connection.execute(
+                sql1,
+                { num : {val: lessonNum }, name : {val: className}, type : {val: questionType }, q : {val: question }, a : {val: answer } },
+                {autoCommit: true}
+              );
+            console.log("Success");
         }
         catch (err) {
             console.log(err);
@@ -291,7 +378,7 @@ app.get("/getUserClass", (req, res)=> {
               }
         }
     }
-    getUserInfo();
+    fetchQuestionInfo();
 });
 
 app.listen(1521, ()=> console.log("app is running"));
