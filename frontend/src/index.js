@@ -17,6 +17,7 @@ import Courses from "./pages/professor-pages/courses";
 import CourseStats from "./pages/professor-pages/course-stats";
 import AboutUs from "./pages/about-us";
 import TranslationLesson from "./pages/student-pages/translationLesson";
+import AddCourseInfo from "./pages/professor-pages/add-course-info";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="course-stats" element={<CourseStats />} />
           <Route path="about-us" element={<AboutUs />} />
           <Route path="translationLesson" element={<TranslationLesson />} />
+          <Route path="add-course-info" element={<AddCourseInfo />} />
         </Route>
       </Routes>
     </BrowserRouter>

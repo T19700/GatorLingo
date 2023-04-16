@@ -16,8 +16,10 @@ Instructions for Oracle Library:
 Download instantclient_19_8
 Copy path into initOracleClient and replace it
 */
-oracledb.initOracleClient({libDir: 'C:/oracle/instantclient-basic-windows.x64-19.18.0.0.0dbru/instantclient_19_18'});            
-//oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'});      
+
+//oracledb.initOracleClient({libDir: 'C:/oracle/instantclient-basic-windows.x64-19.18.0.0.0dbru/instantclient_19_18'});            
+//oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'}); 
+//oracledb.initOracleClient({libDir: 'C:/Users/trist/Oracle/instantclient_21_9'});    
 
 app.get("/getResourceData", (req, res)=> {
     async function fetchResource() {
@@ -180,6 +182,67 @@ app.get("/numberOfLessons", (req, res)=> {
             const result1 = await connection.execute(sql1);
             const result2 = await connection.execute(sql2);
             res.send(result1.rows + " " + result2.rows);
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    fetchQuestionInfo();
+});
+
+app.get("/availableCourses", (req, res)=> {
+    async function fetchQuestionInfo() {
+        let connection;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql1 = "SELECT DISTINCT CLASSID FROM QUESTION";
+            const result1 = await connection.execute(sql1);
+            console.log(result1.rows);
+            res.send(result1.rows);
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    fetchQuestionInfo();
+});
+
+app.get("/addQuestion", (req, res)=> {
+    async function fetchQuestionInfo() {
+        let connection;
+        let lessonNum = req.query.lessonNum;
+        let className = req.query.className;
+        let questionType = req.query.questionType;
+        let question = req.query.question;
+        let answer = req.query.answer;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql1 = "INSERT INTO QUESTION VALUES( :num, :name, :type, :q, :a)";
+            //const sql1 = "INSERT INTO QUESTION VALUES(" + lessonNum + ", SPN1130, " + questionType + ", " + question + ", " + answer + ")";
+            const result = await connection.execute(
+                sql1,
+                { num : {val: lessonNum }, name : {val: className}, type : {val: questionType }, q : {val: question }, a : {val: answer } },
+                {autoCommit: true}
+              );
+            console.log("Success");
         }
         catch (err) {
             console.log(err);
