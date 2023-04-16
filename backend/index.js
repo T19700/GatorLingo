@@ -17,7 +17,7 @@ Download instantclient_19_8
 Copy path into initOracleClient and replace it
 */
 oracledb.initOracleClient({libDir: 'C:/oracle/instantclient-basic-windows.x64-19.18.0.0.0dbru/instantclient_19_18'});            
-//oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'});            
+// oracledb.initOracleClient({libDir: '/Users/rachelpeterson/Downloads/instantclient_19_8'});            
 
 app.get("/getOracleData", (req, res)=> {
     async function fetchStudentInfo() {
@@ -95,7 +95,6 @@ app.get("/getTranslationQuestions", (req, res)=> {
             const result2 = await connection.execute(sqlAnswer);
             const result3 = await connection.execute(sqlRandom1);
             const result4 = await connection.execute(sqlRandom2);
-            console.log(result.rows + "+" + result2.rows + "+" + result3.rows + "+" + result4.rows);
             res.send(result.rows + "+" + result2.rows + "+" + result3.rows + "+" + result4.rows);
         }
         catch (err) {
@@ -168,6 +167,131 @@ app.get("/numberOfLessons", (req, res)=> {
         }
     }
     fetchQuestionInfo();
+});
+
+app.get("/setUser", (req)=> {
+    async function setUserInfo() {
+        let connection;
+        const firstName = req.query._firstName;
+        const lastName = req.query._lastName;
+        const occupation = req.query._occupation;
+
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql = "INSERT INTO ALL_USERS VALUES( :first, :last, :className, :occ)";
+            await connection.execute(
+                sql,
+                { first : {val: firstName }, last : {val: lastName}, className : {val: ""}, occ : {val: occupation }},
+                {autoCommit: true}
+            );
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    setUserInfo();
+});
+
+app.get("/updateClass", (req)=> {
+    async function updateUserInfo() {
+        let connection;
+        const firstName = req.query._firstName;
+        const lastName = req.query._lastName;
+        const studentClass = req.query.classInfo;
+      
+        try {
+          connection = await oracledb.getConnection(constr);
+          const sql = "UPDATE ALL_USERS SET CLASSNAME = :sClass WHERE FIRSTNAME = :fName AND LASTNAME = :lName";
+          await connection.execute(
+            sql,
+            {
+              sClass: { val: studentClass, type: oracledb.STRING },
+              fName: { val: firstName, type: oracledb.STRING },
+              lName: { val: lastName, type: oracledb.STRING }
+            },
+            { autoCommit: true }
+          );
+        } catch (err) {
+          console.log(err);
+        } finally {
+          if (connection) {
+            try {
+              await connection.close();
+            } catch (err) {
+              console.log(err);
+            }
+          }
+        }
+      }
+      updateUserInfo();
+});
+
+app.get("/getUserOccupation", (req, res)=> {
+    async function getUserInfo() {
+        let connection;
+        const firstName = req.query._firstName;
+        const lastName = req.query.lastName;
+
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql = "SELCT OCCUPATION FROM ALL_USERS WHERE firstName = " + firstName + " AND lastName = " + lastName;
+            const result = await connection.execute(sql);
+            res.send(result.rows);        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    getUserInfo();
+});
+
+app.get("/getUserClass", (req, res)=> {
+    async function getUserInfo() {
+        let connection;
+        const firstName = req.query._firstName;
+        const lastName = req.query._lastName;
+
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql = "SELECT CLASSNAME FROM ALL_USERS WHERE firstName = :firstName AND lastName = :lastName";
+            const result = await connection.execute(sql, { firstName: firstName, lastName: lastName }); 
+            if (result.rows.length > 0) {
+                const className = result.rows[0][0]; 
+                const trimmedClassName = className.substring(0, 7); 
+                res.send(trimmedClassName);
+            }
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    getUserInfo();
 });
 
 app.listen(1521, ()=> console.log("app is running"));

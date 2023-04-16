@@ -12,9 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase-config";
+import Axios from "axios";
 const theme = createTheme();
 
 function SignUp() {
@@ -35,16 +36,24 @@ function SignUp() {
       const currentUser = user.user;
       await updateProfile(currentUser, {
         displayName: firstName + " " + lastName,
-        occupation: group,
       });
-      console.log("USER: " + user);
-      console.log("GROUP: " + group);
-
-      navigate("/student-home");
+      setOccupation();
+      //navigate("/student-home");
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  const setOccupation= async() => {
+    // set entire question with question, answer, and two random answers
+    await Axios.get("http://localhost:1521/setUser", {
+        params: {
+            _firstName: firstName,
+            _lastName: lastName,
+            _occupation: group
+        }
+    })
+  }
 
   const handleChange = (event) => {
     setGroup(event.target.value);

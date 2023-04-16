@@ -56,13 +56,9 @@ const MenuHeader = () => {
   const user = auth.currentUser;
 
   // create user initials
-  var str = user.displayName;
-  var matches = str.match(/\b(\w)/g);
+  var str = user?.displayName;
+  var matches = str?.match(/\b(\w)/g);
   var initials = matches.join("");
-
-  // show occupation
-  var occ = user.occupation;
-  console.log("OCCUPATION: " + occ);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 

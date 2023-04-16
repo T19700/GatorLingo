@@ -66,7 +66,6 @@ function TranslationLesson() {
 
     const handleInputChange = (event) => {
         setUserAnswer(event.target.value);
-        console.log("user input: " + userAnswer);
       }
 
     const CorrectQuestion = () => {
