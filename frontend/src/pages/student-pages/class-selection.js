@@ -12,14 +12,17 @@ import { getAuth } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 
 function ClassSelection() {
-  const [userID, setID] = React.useState("");
-
   const auth = getAuth();
   const user = auth.currentUser;
-  setID(user?.email);
+
+  if (user == null) {
+    window.location.reload();
+  }
+
+  const id = user?.email;
 
   const updateUser = async (course) => {
-    const userDoc = doc(db, "users", userID);
+    const userDoc = doc(db, "users", id);
     const newFields = { Course: course };
     await updateDoc(userDoc, newFields);
   };

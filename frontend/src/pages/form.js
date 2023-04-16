@@ -10,8 +10,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase-config";
+import { auth, db } from "../firebase-config";
 import { useNavigate } from "react-router-dom";
+import { doc, getDoc, collection } from "firebase/firestore";
 
 const theme = createTheme();
 
@@ -38,9 +39,15 @@ function Form() {
       );
       console.log(user);
 
-      navigate("/student-home");
+      const docRef = doc(db, "users", loginEmail);
+      const docSnap = await getDoc(docRef);
+      const courseName = docSnap.get("Course");
 
-      //<Link to="/" class="a"></Link>;
+      if (courseName === "Spanish 1" || courseName === "Spanish 2") {
+        navigate("/student-home");
+      } else {
+        navigate("/prof-home");
+      }
     } catch (error) {
       console.log(error.message);
     }

@@ -12,10 +12,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase-config";
-import { collection, getDocs, addDoc, setDoc, doc } from "firebase/firestore";
+import { setDoc, doc } from "firebase/firestore";
 const theme = createTheme();
 
 function SignUp() {
@@ -24,10 +24,7 @@ function SignUp() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [group, setGroup] = React.useState("");
-  const [users, setUsers] = React.useState([]);
   let navigate = useNavigate();
-
-  const usersCollectionRef = collection(db, "users");
 
   const register = async () => {
     try {
@@ -49,7 +46,11 @@ function SignUp() {
         Course: "Not assigned",
       });
 
-      navigate("/class-selection");
+      if (group === "Professor") {
+        navigate("/prof-home");
+      } else {
+        navigate("/class-selection");
+      }
     } catch (error) {
       console.log(error.message);
     }
