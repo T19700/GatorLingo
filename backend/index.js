@@ -318,6 +318,7 @@ app.get("/getUserClass", (req, res)=> {
                 }
               }
         }
+    }
     getUserInfo();
 });
 
@@ -343,6 +344,7 @@ app.get("/availableCourses", (req, res)=> {
                 }
               }
         }
+    }
     fetchQuestionInfo();
 });
 
