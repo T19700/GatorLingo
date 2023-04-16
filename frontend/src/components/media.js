@@ -2,19 +2,18 @@ import React, { useState, useEffect } from "react";
 import { CardContent, CardHeader, makeStyles } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import Card from "@mui/material/Card";
+import Axios from "axios";
 
 function Media() {
     const [videos, setvideos] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [videosPerPage, setVideosPerPage] = useState(1);
+    const resourceType = "Media";
+    const resourceClassID = "SPN1130";
 
     useEffect(() => {
-        const videoUrls = [];
-        videoUrls.push("https://www.youtube.com/watch?v=qE-03EATjho");
-        videoUrls.push("https://www.youtube.com/watch?v=uqMc4LqSQIE");
-        videoUrls.push("https://www.youtube.com/watch?v=etQvoqugIWY");
-        setvideos(videoUrls);
-    }, [])
+        getData()
+    }, []);
 
     const indexOfLastVideo = currentPage * videosPerPage;
     const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
@@ -25,26 +24,30 @@ function Media() {
     };
 
     const totalPages = Math.ceil(videos.length / videosPerPage);
+
+    const getData= async() => {
+        // set entire question with question, answer, and two random answers
+        const response=await Axios.get("http://localhost:1521/getResourceData", {
+            params: {
+                type: resourceType,
+                classID: resourceClassID
+            }
+        }) 
+        var str = response.data;
+        const videoUrls = [];
+        for (let i = 0; i < str.length; i++) {
+            videoUrls.push(str[i][0]);
+            console.log(videoUrls[i]);
+        }
+        setvideos(videoUrls);
+    }
+
     return (
         <div>
             {currentVideos.map(videoUrl => (
-                // <Card key={videoUrl}>
-                //     <CardHeader title="t">
-                //         <CardContent>
-                //             <iframe
-                //                 width="100"
-                //                 height="100"
-                //                 // src={`https://www.youtube.com/embed/${videoUrl.split('=')[1]}`}
-                //                 src="https://www.youtube.com/embed/9rBgSgk4vmw"
-                //                 title={videoUrl}
-                //                 allowFullScreen
-                //             ></iframe>
-                //         </CardContent>
-                //     </CardHeader>
-                // </Card>
                 <iframe
                      width="100%"
-                     height="80%"
+                     height="55%"
                      src={`https://www.youtube.com/embed/${videoUrl.split('=')[1]}`}
                      // src="https://www.youtube.com/embed/9rBgSgk4vmw"
                      title={videoUrl}

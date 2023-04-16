@@ -178,7 +178,7 @@ app.get("/availableCourses", (req, res)=> {
             connection = await oracledb.getConnection(constr);
             const sql1 = "SELECT DISTINCT CLASSID FROM QUESTION";
             const result1 = await connection.execute(sql1);
-            console.log(result1.rows);
+            //console.log("Checking: " + result1.rows);
             res.send(result1.rows);
         }
         catch (err) {
@@ -208,12 +208,71 @@ app.get("/addQuestion", (req, res)=> {
         try {
             connection = await oracledb.getConnection(constr);
             const sql1 = "INSERT INTO QUESTION VALUES( :num, :name, :type, :q, :a)";
-            //const sql1 = "INSERT INTO QUESTION VALUES(" + lessonNum + ", SPN1130, " + questionType + ", " + question + ", " + answer + ")";
             const result = await connection.execute(
                 sql1,
                 { num : {val: lessonNum }, name : {val: className}, type : {val: questionType }, q : {val: question }, a : {val: answer } },
                 {autoCommit: true}
               );
+            console.log("Success");
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    fetchQuestionInfo();
+});
+
+app.get("/availableResources", (req, res)=> {
+    async function fetchQuestionInfo() {
+        let connection;
+        let className = req.query.className;
+        let resourceType = req.query.resourceType;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql1 = "SELECT DISTINCT URL FROM POLLS WHERE CLASSID= '" + className + "' AND TYPE= '" + resourceType + "'";
+            const result1 = await connection.execute(sql1);
+            console.log(result1.rows);
+            res.send(result1.rows);
+        }
+        catch (err) {
+            console.log(err);
+        } 
+        finally {
+            if (connection) {
+                try {
+                  await connection.close();
+                } catch (err) {
+                    console.log(err);
+                }
+              }
+        }
+    }
+    fetchQuestionInfo();
+});
+
+app.get("/addResource", (req, res)=> {
+    async function fetchQuestionInfo() {
+        let connection;
+        let className = req.query.className;
+        let resourceType = req.query.resourceType;
+        let weblink = req.query.weblink;
+        try {
+            connection = await oracledb.getConnection(constr);
+            const sql1 = "INSERT INTO RESOURCES VALUES( :name, :weblink, :type)";
+            const result1 = await connection.execute(
+                sql1,
+                { name : {val: className}, weblink : {val: weblink}, type : {val: resourceType}},
+                {autoCommit: true}
+            );
             console.log("Success");
         }
         catch (err) {
