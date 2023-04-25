@@ -6,16 +6,12 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-//import Pagination from "@mui/material/Pagination";
 import Divider from '@mui/material/Divider';
 import Media from './media'
 import { getAuth } from "firebase/auth";
 import { Link } from 'react-router-dom';
 import Polls from './polls';
 import Axios from "axios";
-
-
-
 
 export default function Spanish1Dashboard() {
     const auth = getAuth();
@@ -69,7 +65,7 @@ export default function Spanish1Dashboard() {
         const lessonsOnPageT = numTransl.slice(startIndexT, endIndexT);
 
         return (
-            <Box m="auto" sx={{borderRadius: 5,  width: 1600, height: 600}}>
+            <Box m="auto" sx={{marginLeft: -10, marginTop: -2, borderRadius: 5,  width: 1600, height: 600}}>
             <Stack
                 direction="column"
                 justifyContent="center"

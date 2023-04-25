@@ -152,7 +152,7 @@ const AddCourseInfo = () => {
                             />
 
                             {/* Submit Button */}
-                            <Link to="/prof-home" class="link">
+                            <Link to="/student-home" class="link">
                                 <Button
                                 type="submit"
                                 fullWidth
@@ -206,7 +206,7 @@ const AddCourseInfo = () => {
                             />
 
                             {/* Submit Button */}
-                            <Link to="/prof-home" class="link">
+                            <Link to="/student-home" class="link">
                                 <Button
                                 type="submit"
                                 fullWidth

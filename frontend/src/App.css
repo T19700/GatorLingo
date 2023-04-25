@@ -1,204 +1,190 @@
 .title {
-    position: relative;
-    text-align: center;
-    margin-top: 10%;
-    font-weight: normal;
+  position: relative;
+  text-align: center;
+  margin-top: 10%;
+  font-weight: normal;
 }
 
 .button-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .div-header {
-    position: relative;
+  position: relative;
 }
 
 .login-button-header {
-    position: absolute;
-    right: 60px;
-    top: 0px;
-    font-size: 32px;
-    color:#46505A;
+  position: absolute;
+  right: 60px;
+  top: 0px;
+  font-size: 32px;
+  color:#46505A;
 }
 
 .login-link:visited {
-    color: #000000;
+  color: #000000;
 }
 
 .link:visited {
-    color: rgb(0, 0, 0);
-}
-
-.link::before {
-  color: rgb(0, 0, 0);
-}
-
-.link:hover {
   color: rgb(0, 0, 0);
 }
 
 .button {
-    display: inline-block !important;
-    margin: 5px;
+  display: inline-block !important;
+  margin: 5px;
 }
 
 a:-webkit-any-link {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 nav {
-    height: 50px;
-    padding-bottom: 50px;
+  height: 50px;
+  padding-bottom: 50px;
 }
 
 .logo {
-    display: inline-block;
-    margin-left: 30px;
-    margin-top: 5px;
-    margin-bottom: 0px;
+  display: inline-block;
+  margin-left: 30px;
+  margin-top: 5px;
+  margin-bottom: 0px;
 }
 
 .class_logo {
-    margin: 10px;
-    max-height: 190px;
+  margin: 10px;
+  max-height: 190px;
 }
 
 .progress-bar {
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 2%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 2%;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .form input {
-    width: 300px;
-    height: 60px;
-    margin: 10px;
+  width: 300px;
+  height: 60px;
+  margin: 10px;
 }
 
 .footer-correct {
-    position: fixed;
-    left: 0;
-    height: 150px;
-    background-color: rgb(82, 212, 82);
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-  }
+  position: fixed;
+  left: 0;
+  height: 150px;
+  background-color: rgb(82, 212, 82);
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
 
-  .footer-incorrect {
-    position: fixed;
-    left: 0;
-    height: 150px;
-    background-color: #f74825;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-  }
+.footer-incorrect {
+  position: fixed;
+  left: 0;
+  height: 150px;
+  background-color: #f74825;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
 
-  .footer-declaration {
-    position: fixed;
-    left: 375px;
-    bottom: 65px;
-  }
+.footer-declaration {
+  position: fixed;
+  left: 400px;
+  bottom: 65px;
+}
 
-  .footer-declaration-with-text {
-    position: fixed;
-    left: 400px;
-    bottom: 55px;
-  }
+.footer-next-button {
+  position: fixed;
+  bottom: 50px;
+  right: 350px;
+  background-color: rgba(240, 248, 255, 0.97);
+  border-radius: 25px;
+  color: rgba(255, 255, 255, 0);
+  text-decoration: none;
+}
 
+.main-container {
+  background: url('components/century-tower.jpg') center center/cover no-repeat; 
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+}
 
-  .footer-next-button {
-    position: fixed;
-    bottom: 50px;
-    right: 350px;
-    background-color: rgba(240, 248, 255, 0.97);
-    border-radius: 25px;
-    color: rgba(255, 255, 255, 0);
-    text-decoration: none;
-  }
+.main-container > h1 {
+  color: #fff;
+  font-size: 100px;
+  margin-top: -100px;
+}
 
-  .main-container {
-    background: url('components/century-tower.jpg') center center/cover no-repeat; 
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
-    object-fit: contain;
-  }
+.about-us-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  object-fit: contain;
+  margin-top: -9px;
+}
 
-  .main-container > h1 {
-    color: #fff;
-    font-size: 100px;
-    margin-top: -100px;
-  }
+.main-container > p {
+  margin-top: 8px;
+  color: #fff;
+  font-size: 32px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
 
-  .about-us-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    object-fit: contain;
-    margin-top: -9px;
-  }
+.main-btns {
+  margin-top: 32px;
+  color: white;
+}
 
-  .main-container > p {
-    margin-top: 8px;
-    color: #fff;
-    font-size: 32px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
-  }
+.main-btns .btn {
+  margin: 6px;
+  color: white;
 
-  .main-btns {
-    margin-top: 32px;
-    color: white;
-  }
-  
-  .main-btns .btn {
-    margin: 6px;
-    color: white;
+}
 
-  }
+.btn {
+  width: 100%;
+}
 
-  .btn {
-    width: 100%;
-  }
+.splitScreen {
+  height: 67.6vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
 
-  .splitScreen {
-    height: 62.6vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-  }
+.topPane {
+  grid-column: 1;
+  grid-row: 1;
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
 
-  .topPane {
-    grid-column: 1;
-    grid-row: 1;
-    text-align: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
-  }
+.bottomPane {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: center;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+}
 
-  .bottomPane {
-    grid-column: 2;
-    grid-row: 1;
-    text-align: center;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
-  }
+.about-us-image {
+  max-width: 720px;
+  margin: 0;
+}
 
-  .about-us-image {
-    max-width: 720px;
-    margin: 0;
-  }

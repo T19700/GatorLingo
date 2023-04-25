@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { CardContent, CardHeader, makeStyles } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
-import Card from "@mui/material/Card";
 import Axios from "axios";
 
 function Media() {
     const [videos, setvideos] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [videosPerPage, setVideosPerPage] = useState(1);
+    const [videosPerPage] = useState(1);
     const resourceType = "Media";
     const resourceClassID = "SPN1130";
 
@@ -26,7 +24,6 @@ function Media() {
     const totalPages = Math.ceil(videos.length / videosPerPage);
 
     const getData= async() => {
-        // set entire question with question, answer, and two random answers
         const response=await Axios.get("http://localhost:1521/getResourceData", {
             params: {
                 type: resourceType,

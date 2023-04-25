@@ -203,7 +203,7 @@ function Lesson() {
             }
         }) 
         var str = response.data;
-        const myArray = str.split(" ");
+        const myArray = str.split("*");
         setQuestion(myArray[0]);
         setCorrectAnswer(myArray[1])
         setRandom1(myArray[2]);

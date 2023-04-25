@@ -127,7 +127,7 @@ const MenuHeader = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <Link to="/prof-home" class="link">
+        <Link to="/student-home" class="link">
           <MenuItem onClick={handleClose}>
             <Avatar /> My Dashboard
           </MenuItem>
